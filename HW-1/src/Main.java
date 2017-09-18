@@ -19,7 +19,7 @@ public class Main {
         is_success(test.contains("cc"), "Wrong contains");
         is_success(test.put("aa","ss").equals("bb"), "Wrong put");
         is_success(test.remove("cc").equals("dd"), "Wrong remove");
-        is_success(test.get("aa").equals("ss"), "Wrong contains");
-        is_success(test.get("cc") == null, "Wrong contains");
+        is_success(test.get("aa").equals("ss"), "Wrong get");
+        is_success(test.get("cc") == null, "Wrong get");
     }
 }
