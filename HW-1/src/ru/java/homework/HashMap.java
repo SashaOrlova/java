@@ -58,7 +58,8 @@ public class HashMap {
     }
 
     /**
-     * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+     * Returns the value to which the specified key is mapped,
+     or null if this map contains no mapping for the key.
      * @param key the key whose associated value is to be returned
      * @return the value mapping with key
      */
@@ -67,7 +68,8 @@ public class HashMap {
     }
 
     /**
-     * Associates the value with the key in this map. If the map previously contained a mapping for the key, the old value will be replaced.
+     * Associates the value with the key in this map. 
+     If the map previously contained a mapping for the key, the old value will be replaced.
      * @param key  key with which the value to be associated
      * @param value value to be associated with key
      * @return old value associated with key
