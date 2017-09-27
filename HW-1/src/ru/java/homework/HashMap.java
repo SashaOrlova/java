@@ -1,5 +1,7 @@
 package ru.java.homework;
 
+import static java.lang.Math.abs;
+
 /**
  * Hashmap is a data structure which implements an associative array abstract data type,
  * a structure that can map keys to values.
@@ -22,6 +24,10 @@ public class HashMap {
         }
     }
 
+    private int getHashCode(String St){
+        return abs(St.hashCode() % (capacity));
+    }
+
     private boolean isFull() {
         return size >= 0.75*capacity;
     }
@@ -34,7 +40,7 @@ public class HashMap {
         for (int i = 0; i < capacity; i++) {
             List.Node now = lists[i].head;
             while (now != null) {
-                newLists[now.keyValue.hashCode() % (capacity*2)].insert(now.stringValue, now.keyValue);
+                newLists[abs(now.keyValue.hashCode() % (capacity*2))].insert(now.stringValue, now.keyValue);
                 now = now.nextNode;
             }
         }
@@ -54,7 +60,7 @@ public class HashMap {
      * @return true if the key was found else false
      */
     public boolean contains(String key) {
-        return lists[key.hashCode() % capacity].find(key);
+        return lists[getHashCode(key)].find(key);
     }
 
     /**
@@ -64,11 +70,11 @@ public class HashMap {
      * @return the value mapping with key
      */
     public String get(String key) {
-        return lists[key.hashCode() % capacity].search(key);
+        return lists[getHashCode(key)].search(key);
     }
 
     /**
-     * Associates the value with the key in this map. 
+     * Associates the value with the key in this map.
      If the map previously contained a mapping for the key, the old value will be replaced.
      * @param key  key with which the value to be associated
      * @param value value to be associated with key
@@ -76,13 +82,11 @@ public class HashMap {
      */
     public String put(String key, String value) {
         String stringValue = remove(key);
-        if (stringValue == null) {
-            size++;
-        }
+        size++;
         if (isFull()) {
             rebuild();
         }
-        lists[key.hashCode() % capacity].insert(value, key);
+        lists[getHashCode(key)].insert(value, key);
         return stringValue;
     }
 
@@ -93,7 +97,7 @@ public class HashMap {
      */
     public String remove(String key) {
         String stringValue = get(key);
-        lists[key.hashCode() % capacity].delete(key);
+        lists[getHashCode(key)].delete(key);
         if (stringValue != null) size--;
         return stringValue;
     }
