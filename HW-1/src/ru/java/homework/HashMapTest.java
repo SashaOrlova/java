@@ -1,100 +1,141 @@
 package ru.java.homework;
 
+import static java.lang.Math.abs;
 import static org.junit.Assert.assertEquals;
 
 public class HashMapTest {
 
     @org.junit.Test
     public void sizeSimple() throws Exception {
-        HashMap test_size = new HashMap();
-        assertEquals(0, test_size.size());
+        HashMap testSize = new HashMap();
+        assertEquals(0, testSize.size());
     }
 
     @org.junit.Test
     public void sizeWitPut() throws Exception {
-        HashMap test_size = new HashMap();
-        test_size.put("first_key", "first_value");
-        test_size.put("second_key", "second_value");
-        assertEquals(2, test_size.size());
+        HashMap testSize = new HashMap();
+        testSize.put("first_key", "first_value");
+        testSize.put("second_key", "second_value");
+        assertEquals(2, testSize.size());
     }
 
     @org.junit.Test
     public void sizeWithSameKey() throws Exception {
-        HashMap test_size = new HashMap();
-        test_size.put("first_key", "first_value");
-        test_size.put("second_key", "second_value");
-        test_size.put("first_key", "third_value");
-        assertEquals(2, test_size.size());
+        HashMap testSize = new HashMap();
+        testSize.put("first_key", "first_value");
+        testSize.put("second_key", "second_value");
+        testSize.put("first_key", "third_value");
+        assertEquals(2, testSize.size());
     }
 
     @org.junit.Test
     public void containsSimple() throws Exception {
-        HashMap test_contains = new HashMap();
-        assertEquals(false, test_contains.contains("contain?"));
+        HashMap testContains = new HashMap();
+        assertEquals(false, testContains.contains("contain?"));
     }
 
     @org.junit.Test
     public void containsWithPut() throws Exception {
-        HashMap test_contains = new HashMap();
-        test_contains.put("contain?", "yes");
-        assertEquals(true, test_contains.contains("contain?"));
+        HashMap testContains = new HashMap();
+        testContains.put("contain?", "yes");
+        assertEquals(true, testContains.contains("contain?"));
     }
 
     @org.junit.Test
     public void containsWithPutRemove() throws Exception {
-        HashMap test_contains = new HashMap();
-        test_contains.put("contain?", "no");
-        test_contains.remove("contain?");
-        assertEquals(false, test_contains.contains("contain?"));
+        HashMap testContains = new HashMap();
+        testContains.put("contain?", "no");
+        testContains.remove("contain?");
+        assertEquals(false, testContains.contains("contain?"));
     }
 
     @org.junit.Test
     public void getEmpty() throws Exception {
-        HashMap test_get = new HashMap();
-        assertEquals(null, test_get.get("try_get"));
+        HashMap testGet = new HashMap();
+        assertEquals(null, testGet.get("tryGet"));
     }
 
     @org.junit.Test
     public void getWithPut() throws Exception {
-        HashMap test_get = new HashMap();
-        test_get.put("try_get", "yes");
-        assertEquals("yes", test_get.get("try_get"));
+        HashMap testGet = new HashMap();
+        testGet.put("tryGet", "yes");
+        assertEquals("yes", testGet.get("tryGet"));
     }
 
     @org.junit.Test
     public void putWithRemove() throws Exception {
-        HashMap test_get = new HashMap();
-        test_get.put("try_get", "no");
-        test_get.remove("try_get");
-        assertEquals(null, test_get.get("try_get"));
+        HashMap testGet = new HashMap();
+        testGet.put("tryGet", "no");
+        testGet.remove("tryGet");
+        assertEquals(null, testGet.get("tryGet"));
     }
 
     @org.junit.Test
     public void removeNull() throws Exception {
-        HashMap test_remove = new HashMap();
-        assertEquals(null, test_remove.get("try_remove"));
+        HashMap testRemove = new HashMap();
+        assertEquals(null, testRemove.get("tryRemove"));
     }
 
     @org.junit.Test
     public void removeWithPut() throws Exception {
-        HashMap test_remove = new HashMap();
-        test_remove.put("try_remove", "yes");
-        assertEquals("yes", test_remove.get("try_remove"));
+        HashMap testRemove = new HashMap();
+        testRemove.put("tryRemove", "yes");
+        assertEquals("yes", testRemove.get("tryRemove"));
     }
 
     @org.junit.Test
     public void clearEmpty() throws Exception {
-        HashMap test_clear = new HashMap();
-        test_clear.clear();
-        assertEquals(0, test_clear.size());
+        HashMap testClear = new HashMap();
+        testClear.clear();
+        assertEquals(0, testClear.size());
     }
 
     @org.junit.Test
     public void clearWithPut() throws Exception {
-        HashMap test_clear = new HashMap();
-        test_clear.put("test_clear","yes");
-        test_clear.clear();
-        assertEquals(0, test_clear.size());
-        assertEquals( null,test_clear.get("test_clear"));
+        HashMap testClear = new HashMap();
+        testClear.put("testClear","yes");
+        testClear.clear();
+        assertEquals(0, testClear.size());
+        assertEquals( null,testClear.get("testClear"));
+    }
+
+    private class CollisionsHashMap extends HashMap {
+        @Override
+        protected int getHashCode(String St) {
+            return abs(St.hashCode() % (2));
+        }
+    }
+    
+    @org.junit.Test
+    public void CollisionsTest() throws Exception {
+        CollisionsHashMap testPut = new CollisionsHashMap();
+        testPut.put("first_key", "first_value");
+        testPut.put("second_key", "second_value");
+        testPut.put("third_key", "third_value");
+        assertEquals(3, testPut.size());
+        assertEquals(true, testPut.contains("first_key"));
+        assertEquals(true, testPut.contains("second_key"));
+        assertEquals(true, testPut.contains("third_key"));
+        assertEquals(false, testPut.contains("something_else"));
+        assertEquals("first_value", testPut.get("first_key"));
+        assertEquals("second_value", testPut.get("second_key"));
+        assertEquals("third_value", testPut.get("third_key"));
+    }
+
+    private class RebuildHashMap extends HashMap {
+        @Override
+        protected boolean isFull() {
+            return true;
+        }
+    }
+    
+    @org.junit.Test
+    public void rebuildTest() throws Exception {
+        RebuildHashMap testRebuild = new RebuildHashMap();
+        testRebuild.put("aaaa", "bbbb");
+        assertEquals(true, testRebuild.contains("aaaa"));
+        assertEquals("bbbb", testRebuild.get("aaaa"));
+        testRebuild.remove("aaaa");
+        assertEquals(false, testRebuild.contains("aaaa"));
     }
 }

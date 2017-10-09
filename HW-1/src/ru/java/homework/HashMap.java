@@ -24,11 +24,11 @@ public class HashMap {
         }
     }
 
-    private int getHashCode(String St){
+    protected int getHashCode(String St) {
         return abs(St.hashCode() % (capacity));
     }
 
-    private boolean isFull() {
+    protected boolean isFull() {
         return size >= 0.75*capacity;
     }
 
