@@ -11,43 +11,31 @@ public class Spiral {
      * @return string that contain all elements of matrix in their spiral circumvention
      */
     public static String spiral(final int[][] matrix) throws IllegalArgumentException {
-        if (matrix.length % 2 == 0) throw new IllegalArgumentException("Even matrix size");
+        if (matrix.length % 2 == 0)
+            throw new IllegalArgumentException("Even matrix size");
         StringBuilder answer = new StringBuilder();
-        int start_pos = matrix.length / 2;
-        answer.append(matrix[start_pos][start_pos]);
+        int startPosition = matrix.length / 2;
+        answer.append(matrix[startPosition][startPosition]);
         int cnt = 1;
         while (cnt < matrix.length / 2 + 1) {
             for (int i = 0; i < cnt * 2; i++) {
-                answer.append(matrix[start_pos - cnt + i + 1][start_pos + cnt]);
+                answer.append(matrix[startPosition - cnt + i + 1][startPosition + cnt]);
             }
             for (int i = 0; i < cnt * 2; i++) {
-                answer.append(matrix[start_pos + cnt][start_pos + cnt - i - 1]);
+                answer.append(matrix[startPosition + cnt][startPosition + cnt - i - 1]);
             }
             for (int i = 0; i < cnt * 2; i++) {
-                answer.append(matrix[start_pos + cnt - i - 1][start_pos - cnt]);
+                answer.append(matrix[startPosition + cnt - i - 1][startPosition - cnt]);
             }
             for (int i = 0; i < cnt * 2; i++) {
-                answer.append(matrix[start_pos - cnt][start_pos - cnt + 1 + i]);
+                answer.append(matrix[startPosition - cnt][startPosition - cnt + 1 + i]);
             }
             cnt++;
         }
         return answer.toString();
     }
 
-    /**
-     * Sort matrix by first element in colon. Elements must be Comparable.
-     *
-     * @param matrix - two-dimensional array that will be sorted
-     */
-    public static void sortMatrix(int[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = i + 1; j < matrix.length; j++) {
-                int tmp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = tmp;
-            }
-        }
-        Arrays.sort(matrix, (int[] o1, int[] o2) -> o2[0] - o1[0]);
+    private static void transposeMatrix(int[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = i + 1; j < matrix.length; j++) {
                 int tmp = matrix[i][j];
@@ -56,8 +44,14 @@ public class Spiral {
             }
         }
     }
-
-    static public void main(String[] st) {
-
+    /**
+     * Sort matrix by first element in colon. Elements must be Comparable.
+     *
+     * @param matrix - two-dimensional array that will be sorted
+     */
+    public static void sortMatrix(int[][] matrix) {
+        transposeMatrix(matrix);
+        Arrays.sort(matrix, (int[] o1, int[] o2) -> o2[0] - o1[0]);
+        transposeMatrix(matrix);
     }
 }
