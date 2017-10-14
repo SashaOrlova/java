@@ -8,9 +8,9 @@ import static java.lang.Math.abs;
  */
 public class HashMap {
 
-    private int initial_capacity = 73;
+    private final int INITIAL_CAPACITY = 73;
     private int size = 0;
-    private int capacity = initial_capacity;
+    private int capacity = INITIAL_CAPACITY;
 
     private List[] lists;
 
@@ -24,8 +24,8 @@ public class HashMap {
         }
     }
 
-    private int getHashCode(String St) {
-        return abs(St.hashCode() % (capacity));
+    private int getHashCode(String string) {
+        return abs(string.hashCode() % (capacity));
     }
 
     private boolean isFull() {
@@ -38,10 +38,11 @@ public class HashMap {
             newLists[i] = new List();
         }
         for (int i = 0; i < capacity; i++) {
-            List.Node now = lists[i].head;
-            while (now != null) {
-                newLists[abs(now.keyValue.hashCode() % (capacity * 2))].insert(now.stringValue, now.keyValue);
-                now = now.nextNode;
+            List.Node currentNode = lists[i].head;
+            while (currentNode != null) {
+                newLists[abs(currentNode.keyValue.hashCode() % (capacity * 2))].insert(
+                        currentNode.stringValue, currentNode.keyValue);
+                currentNode = currentNode.nextNode;
             }
         }
         lists = newLists;
@@ -103,7 +104,8 @@ public class HashMap {
     public String remove(String key) {
         String stringValue = get(key);
         lists[getHashCode(key)].delete(key);
-        if (stringValue != null) size--;
+        if (stringValue != null)
+            size--;
         return stringValue;
     }
 
@@ -112,7 +114,7 @@ public class HashMap {
      */
     public void clear() {
         size = 0;
-        capacity = initial_capacity;
+        capacity = INITIAL_CAPACITY;
         lists = new List[capacity];
         for (int i = 0; i < capacity; i++) {
             lists[i] = new List();
@@ -130,12 +132,12 @@ public class HashMap {
             if (size == 0) {
                 head = new Node(stringValue, key);
             } else {
-                Node now = head;
-                while (now.nextNode != null) {
-                    now = now.nextNode;
+                Node currentNode = head;
+                while (currentNode.nextNode != null) {
+                    currentNode = currentNode.nextNode;
                 }
-                now.nextNode = new Node(stringValue, key);
-                now.nextNode.prevNode = now;
+                currentNode.nextNode = new Node(stringValue, key);
+                currentNode.nextNode.prevNode = currentNode;
             }
             size++;
         }
@@ -147,12 +149,12 @@ public class HashMap {
          * @return value stored with key or null if key not in list
          */
         private String search(String key) {
-            Node now = head;
-            while (now != null && !now.keyValue.equals(key)) {
-                now = now.nextNode;
+            Node currentNode = head;
+            while (currentNode != null && !currentNode.keyValue.equals(key)) {
+                currentNode = currentNode.nextNode;
             }
-            if (now != null && now.keyValue.equals(key)) {
-                return now.stringValue;
+            if (currentNode != null && currentNode.keyValue.equals(key)) {
+                return currentNode.stringValue;
             }
             return null;
         }
@@ -174,22 +176,22 @@ public class HashMap {
          * @param key value with key will be deleted
          */
         private void delete(String key) {
-            Node now = head;
-            while (now != null && !now.keyValue.equals(key)) {
-                now = now.nextNode;
+            Node currentNode = head;
+            while (currentNode != null && !currentNode.keyValue.equals(key)) {
+                currentNode = currentNode.nextNode;
             }
-            if (now != null && now.keyValue.equals(key)) {
-                if (now.prevNode == null) {
-                    head = now.nextNode;
+            if (currentNode != null && currentNode.keyValue.equals(key)) {
+                if (currentNode.prevNode == null) {
+                    head = currentNode.nextNode;
                 }
-                if (now.nextNode != null) {
-                    if (now.prevNode != null) {
-                        now.prevNode.nextNode = now.nextNode;
+                if (currentNode.nextNode != null) {
+                    if (currentNode.prevNode != null) {
+                        currentNode.prevNode.nextNode = currentNode.nextNode;
                     }
-                    now.nextNode.prevNode = now.prevNode;
+                    currentNode.nextNode.prevNode = currentNode.prevNode;
                 } else {
-                    if (now.prevNode != null) {
-                        now.prevNode.nextNode = null;
+                    if (currentNode.prevNode != null) {
+                        currentNode.prevNode.nextNode = null;
                     }
                 }
                 size--;
