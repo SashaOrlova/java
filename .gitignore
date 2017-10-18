@@ -24,6 +24,6 @@ hs_err_pid*
 *workspace.xml
 *tasks.xml
 
-*.DS_Store
-
 */target/*
+
+*.DS_Store
