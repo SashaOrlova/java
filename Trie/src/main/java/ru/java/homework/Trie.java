@@ -7,23 +7,22 @@ import java.io.*;
  */
 public class Trie implements Serializable {
     private int size = 0;
-    private vertex root;
+    private Vertex root = new Vertex();
 
-    public Trie() {
-        root = new vertex();
+    private int getIndex(char symbol) {
+        return symbol - 'a';
     }
-
     /**
      * add new string in trie. Work time is O(|length|)
      * @param st string that will be inserted
      * @return true if with string not exist or false otherwise.
      */
     public boolean addString(final String st) {
-        vertex ptr = root;
-        if (root.next[st.charAt(0) - 'a'] == null) {
+        Vertex ptr = root;
+        if (root.next[getIndex(st.charAt(0))] == null) {
             for (char c : st.toCharArray()) {
-                ptr.next[c - 'a'] = new vertex();
-                ptr = ptr.next[c - 'a'];
+                ptr.next[getIndex(c)] = new Vertex();
+                ptr = ptr.next[getIndex(c)];
             }
             ptr.leaf = true;
             size++;
@@ -31,8 +30,8 @@ public class Trie implements Serializable {
             return true;
         } else {
             int i = 0;
-            while (i < st.length() && ptr.next[st.charAt(i) - 'a'] != null) {
-                ptr = ptr.next[st.charAt(i) - 'a'];
+            while (i < st.length() && ptr.next[getIndex(st.charAt(i))] != null) {
+                ptr = ptr.next[getIndex(st.charAt(i))];
                 i++;
             }
             if (i == st.length()) {
@@ -46,8 +45,8 @@ public class Trie implements Serializable {
                 }
             } else {
                 for (; i < st.length(); i++) {
-                    ptr.next[st.charAt(i) - 'a'] = new vertex();
-                    ptr = ptr.next[st.charAt(i) - 'a'];
+                    ptr.next[getIndex(st.charAt(i))] = new Vertex();
+                    ptr = ptr.next[getIndex(st.charAt(i))];
                 }
                 ptr.leaf = true;
                 size++;
@@ -64,9 +63,9 @@ public class Trie implements Serializable {
      */
     public int startWithPrefix(final String st) {
         int i = 0;
-        vertex ptr = root;
-        while (i < st.length() && ptr.next[st.charAt(i) - 'a'] != null) {
-            ptr = ptr.next[st.charAt(i) - 'a'];
+        Vertex ptr = root;
+        while (i < st.length() && ptr.next[getIndex(st.charAt(i))] != null) {
+            ptr = ptr.next[getIndex(st.charAt(i))];
             i++;
         }
         return i == st.length() ? ptr.cnt + (ptr.leaf ? 1 : 0) : 0;
@@ -87,9 +86,9 @@ public class Trie implements Serializable {
      */
     public boolean contains(final String st) {
         int i = 0;
-        vertex ptr = root;
-        while (i < st.length() && ptr.next[st.charAt(i) - 'a'] != null) {
-            ptr = ptr.next[st.charAt(i) - 'a'];
+        Vertex ptr = root;
+        while (i < st.length() && ptr.next[getIndex(st.charAt(i))] != null) {
+            ptr = ptr.next[getIndex(st.charAt(i))];
             i++;
         }
         return i == st.length() && ptr.leaf;
@@ -104,9 +103,9 @@ public class Trie implements Serializable {
         if (contains(st)) {
             correctStartsWith(st, -1);
             int i = 0;
-            vertex ptr = root;
-            while (i < st.length() && ptr.next[st.charAt(i) - 'a'] != null) {
-                ptr = ptr.next[st.charAt(i) - 'a'];
+            Vertex ptr = root;
+            while (i < st.length() && ptr.next[getIndex(st.charAt(i))] != null) {
+                ptr = ptr.next[getIndex(st.charAt(i))];
                 i++;
             }
             ptr.leaf = false;
@@ -117,10 +116,10 @@ public class Trie implements Serializable {
 
     private void correctStartsWith(final String st, int k) {
         int i = 0;
-        vertex ptr = root;
-        while (i < st.length() && ptr.next[st.charAt(i) - 'a'] != null) {
+        Vertex ptr = root;
+        while (i < st.length() && ptr.next[getIndex(st.charAt(i))] != null) {
             ptr.cnt += k;
-            ptr = ptr.next[st.charAt(i) - 'a'];
+            ptr = ptr.next[getIndex(st.charAt(i))];
             i++;
         }
     }
@@ -128,7 +127,7 @@ public class Trie implements Serializable {
     /**
      * write trie in out.
      * @param out OutputStream where trie be written
-     * @throws IOException
+     * @throws IOException - if out is uncorrected OutputStream
      */
     public void serialize(OutputStream out) throws IOException{
         ObjectOutputStream oos = new ObjectOutputStream(out);
@@ -139,22 +138,22 @@ public class Trie implements Serializable {
     /**
      * read trie from in and change it
      * @param in input stream from trie will be read
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException - if in is uncorrected InputStream
+     * @throws ClassNotFoundException - if no Trie in InputStream
      */
-    public void  deserialize(InputStream in) throws IOException, ClassNotFoundException{
+    public void  deserialize(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(in);
         Trie tmp = (Trie) ois.readObject();
         root  = tmp.root;
         size = tmp.size;
     }
-    private class vertex implements Serializable{
+    private class Vertex implements Serializable {
         int cnt = 0;
-        vertex[] next;
+        Vertex[] next;
         boolean leaf = false;
 
-        vertex() {
-            next = new vertex[100];
+        Vertex() {
+            next = new Vertex[100];
         }
     }
 }
