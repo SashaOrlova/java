@@ -2,11 +2,14 @@ package ru.homework.java;
 
 import java.util.Arrays;
 
+/**
+ * Class for work with two-dimensional arrays. Consist methods spiral() and sort()
+ */
 public class Spiral {
     /**
      * print two-dimensional array in spiral circumvention.
-     * Throw IllegalArgumentException if matrix has even length.
      *
+     * @throws IllegalArgumentException if matrix has even length.
      * @param matrix - two-dimensional array of int that will be printed.
      * @return string that contain all elements of matrix in their spiral circumvention
      */
@@ -16,19 +19,24 @@ public class Spiral {
         StringBuilder answer = new StringBuilder();
         int startPosition = matrix.length / 2;
         answer.append(matrix[startPosition][startPosition]);
+        answer.append(' ');
         int cnt = 1;
         while (cnt < matrix.length / 2 + 1) {
             for (int i = 0; i < cnt * 2; i++) {
                 answer.append(matrix[startPosition - cnt + i + 1][startPosition + cnt]);
+                answer.append(' ');
             }
             for (int i = 0; i < cnt * 2; i++) {
                 answer.append(matrix[startPosition + cnt][startPosition + cnt - i - 1]);
+                answer.append(' ');
             }
             for (int i = 0; i < cnt * 2; i++) {
                 answer.append(matrix[startPosition + cnt - i - 1][startPosition - cnt]);
+                answer.append(' ');
             }
             for (int i = 0; i < cnt * 2; i++) {
                 answer.append(matrix[startPosition - cnt][startPosition - cnt + 1 + i]);
+                answer.append(' ');
             }
             cnt++;
         }

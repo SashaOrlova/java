@@ -1,13 +1,13 @@
-import ru.homework.java.Spiral;
+package ru.homework.java;
 
 import static org.junit.Assert.assertEquals;
 
-class SpiralTest {
+public class SpiralTest {
     /**
-     * test how Spiral works with different size of matrix. Include tests for methods spiral() and sort.
+     * test how Spiral works with different size of matrix. Include tests for methods spiral and sort.
      */
-    @org.junit.jupiter.api.Test
-    void spiralTestSimple() {
+    @org.junit.Test
+    public void spiralTestSimple() {
         int[][] m = new int[1][1];
         int c = 1;
         for (int i = 0; i < 1; i++) {
@@ -15,11 +15,11 @@ class SpiralTest {
                 m[i][j] = c++;
             }
         }
-        assertEquals(Spiral.spiral(m), "1");
+        assertEquals("1 ", Spiral.spiral(m));
     }
 
-    @org.junit.jupiter.api.Test
-    void spiralTestThree() {
+    @org.junit.Test
+    public void spiralTestThree() {
         int[][] m = new int[3][3];
         int c = 1;
         for (int i = 0; i < 3; i++) {
@@ -27,11 +27,11 @@ class SpiralTest {
                 m[i][j] = c++;
             }
         }
-        assertEquals(Spiral.spiral(m), "569874123");
+        assertEquals("5 6 9 8 7 4 1 2 3 ", Spiral.spiral(m));
     }
 
-    @org.junit.jupiter.api.Test
-    void spiralTestFive() {
+    @org.junit.Test
+    public void spiralTestFive() {
         int[][] m = new int[5][5];
         int c = 1;
         for (int i = 0; i < 5; i++) {
@@ -39,11 +39,11 @@ class SpiralTest {
                 m[i][j] = c++;
             }
         }
-        assertEquals(Spiral.spiral(m), "13141918171278910152025242322211611612345");
+        assertEquals("13 14 19 18 17 12 7 8 9 10 15 20 25 24 23 22 21 16 11 6 1 2 3 4 5 ", Spiral.spiral(m));
     }
 
-    @org.junit.jupiter.api.Test
-    void spiralTestEvenSize() {
+    @org.junit.Test
+    public void spiralTestEvenSize() {
         int[][] m = new int[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -60,8 +60,8 @@ class SpiralTest {
     /**
      * sort matrix size [1x1]
      */
-    @org.junit.jupiter.api.Test
-    void spiralTestSimpleSort() {
+    @org.junit.Test
+    public void spiralTestSimpleSort() {
         int[][] m = new int[1][1];
         int c = 1;
         for (int i = 0; i < 1; i++) {
@@ -76,8 +76,8 @@ class SpiralTest {
     /**
      * sort matrix size [5x5] full numbers from 1 to 25
      */
-    @org.junit.jupiter.api.Test
-    void spiralTestSort() {
+    @org.junit.Test
+    public void spiralTestSort() {
         int[][] m = new int[5][5];
         int c = 1;
         for (int i = 0; i < 5; i++) {
