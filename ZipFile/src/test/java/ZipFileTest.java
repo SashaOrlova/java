@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class ZipFileTest {
 
     private static ArrayList<String> getArrayListFromFile(String fileName) throws IOException {
-        ArrayList<String> bufferArray = new ArrayList<String>();
+        ArrayList<String> bufferArray = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
         String currentLine;
         while ((currentLine = bufferedReader.readLine()) != null) {
@@ -24,10 +24,7 @@ public class ZipFileTest {
 
     @org.junit.Test
     public void mainSimple() throws Exception {
-        String[] args = new String[3];
-        args[1] = "src/test/resources/test1";
-        args[2] = ".*";
-        ZipFile.main(args);
+        ZipFile.findZip("src/test/resources/test1", ".*");
         ArrayList<String> resultFile = getArrayListFromFile("src/test/resources/result/abcd.txt");
         ArrayList<String> unzipFile = getArrayListFromFile("src/test/resources/testunzip/abcd.txt");
         for (int i = 0; i < min(resultFile.size(), unzipFile.size()); i++) {
@@ -42,10 +39,7 @@ public class ZipFileTest {
 
     @org.junit.Test
     public void mainWithRegex() throws Exception {
-        String[] args = new String[3];
-        args[1] = "src/test/resources";
-        args[2] = "a.*";
-        ZipFile.main(args);
+        ZipFile.findZip("src/test/resources", "a.*");
         File f2 = new File("src/test/resources/result/notFound.txt");
         assertEquals(false, f2.exists());
         ArrayList<String> resultFile = getArrayListFromFile("src/test/resources/result/abcde.txt");
