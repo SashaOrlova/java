@@ -1,4 +1,6 @@
 package ru.java.homework;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Function;
 
 /**
@@ -21,26 +23,26 @@ public class Maybe<T> {
      * @param <T> type of return Maybe
      * @return new Maybe
      */
-    @org.jetbrains.annotations.NotNull
-    public static <T> Maybe<T> just(T t) {
-        return new Maybe<T>(t);
+    @NotNull
+    public static <T> Maybe<T> just(@NotNull T t) {
+        return new Maybe<>(t);
     }
 
     /** Create empty Maybe
-     * @param <T> type of Maybe
      * @return empty Maybe
      */
-    public static <T> Maybe<T> nothing() {
-        return new Maybe<T>();
+    @NotNull
+    public static Maybe<?> nothing() {
+        return new Maybe<>();
     }
 
     /** Use for receive kept value in Maybe
      * @return kept value
-     * @throws MaybeException if Maybe is empty
+     * @throws MaybeNothingException if Maybe is empty
      */
-    public T get() throws MaybeException {
+    public T get() throws MaybeNothingException {
         if (st == null)
-            throw new MaybeException();
+            throw new MaybeNothingException();
         else
             return st;
     }
@@ -49,7 +51,7 @@ public class Maybe<T> {
      * @return false if Maybe empty, true otherwise
      */
     public boolean isPresent() {
-        return !(st == null);
+        return st != null;
     }
 
     /** Apply mapper for element kept in Maybe
@@ -59,13 +61,13 @@ public class Maybe<T> {
      */
     public <U> Maybe<U> map(Function<T, U> mapper) {
         if (!isPresent())
-            return new Maybe<>();
+            return (Maybe<U>) this;
         else {
             return new Maybe<>(mapper.apply(st));
         }
     }
 
-    static public class MaybeException extends Exception {
+    static public class MaybeNothingException extends Exception {
 
     }
 }
