@@ -124,15 +124,26 @@ public class Trie implements Serializable {
         }
     }
 
+    private void dfs(StringBuffer st, Vertex v, OutputStream out) throws IOException {
+        if (v == null)
+            return;
+        if (v.leaf) {
+            out.write(st.toString().getBytes());
+            out.write(0);
+        }
+        for (int i = 0 ; i < 100; i++) {
+            dfs(st.append('a' + i ), v.next[i], out);
+        }
+
+    }
     /**
      * write trie in out.
      * @param out OutputStream where trie be written
      * @throws IOException - if out is uncorrected OutputStream
      */
-    public void serialize(OutputStream out) throws IOException{
-        ObjectOutputStream oos = new ObjectOutputStream(out);
-        oos.writeObject(this);
-        oos.close();
+    public void serialize(OutputStream out) throws IOException {
+        out.write(size);
+        dfs(new StringBuffer(), root, out);
     }
 
     /**
@@ -142,18 +153,23 @@ public class Trie implements Serializable {
      * @throws ClassNotFoundException - if no Trie in InputStream
      */
     public void  deserialize(InputStream in) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(in);
-        Trie tmp = (Trie) ois.readObject();
-        root  = tmp.root;
-        size = tmp.size;
+        size = 0;
+        in.read();
+        root = new Vertex();
+        StringBuilder buf = new StringBuilder();
+        while (in.available() > 1) {
+            int first = in.read();
+            if (first == 0){
+                addString(buf.toString());
+                buf.delete(0, buf.length() - 1);
+            }
+            buf.append((char)(first*10 + in.read()));
+        }
+        addString(buf.toString());
     }
     private class Vertex implements Serializable {
         int cnt = 0;
-        Vertex[] next;
+        Vertex[] next = new Vertex[100];
         boolean leaf = false;
-
-        Vertex() {
-            next = new Vertex[100];
-        }
     }
 }

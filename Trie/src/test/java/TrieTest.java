@@ -106,9 +106,23 @@ public class TrieTest {
         t.addString("aaa");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         t.serialize(out);
-        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-        Trie t1 = new Trie();
-        t1.deserialize(in);
-        assertEquals(true, t1.contains("aaa"));
+        //1aaa0
+        assertEquals(1, out.toString().charAt(0));
+        assertEquals(9 + '0', out.toString().charAt(1));
+        assertEquals(7 + '0', out.toString().charAt(2));
+        assertEquals(9 + '0', out.toString().charAt(3));
+        assertEquals(7 + '0', out.toString().charAt(4));
+        assertEquals(9 + '0', out.toString().charAt(5));
+        assertEquals(7 + '0', out.toString().charAt(6));
+        assertEquals(0, out.toString().charAt(7));
+    }
+    @org.junit.Test
+    public void deserialize() throws Exception {
+        byte[] arr = {1,9,8,9,7,9,9,0}; // size = 1, string = "bac"
+        ByteArrayInputStream in = new ByteArrayInputStream(arr);
+        Trie t = new Trie();
+        t.deserialize(in);
+        assertEquals(1, t.size());
+        assertEquals(true, t.contains("bac"));
     }
 }
