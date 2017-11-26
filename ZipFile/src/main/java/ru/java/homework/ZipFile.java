@@ -30,7 +30,6 @@ public class ZipFile {
             }
             if (f.isFile() && f.getName().matches(regex) && f.getName().matches(".*.zip"))
                 try (FileSystem file = FileSystems.newFileSystem(f.toPath(), null)) {
-                    try {
                         for (Enumeration<? extends ZipEntry> enumZip = new
                                 java.util.zip.ZipFile(f).entries(); enumZip.hasMoreElements(); ) {
                             ZipEntry entry = enumZip.nextElement();
@@ -42,9 +41,6 @@ public class ZipFile {
                                 System.out.println(e.getMessage());
                             }
                         }
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
 
         }
