@@ -15,22 +15,37 @@ public class Stack<E> {
         reserve *= 2;
     }
 
+    /**
+     * Pushes an item onto the top of this stack.
+     */
     public void push (E c) {
         if (size >= reserve)
             rebuild();
         stack[size++] = c;
     }
 
+    /**
+     * Removes the object at the top of this stack
+     * @throws RuntimeException if stack was empty
+     */
     public void pop() throws RuntimeException {
         size--;
         if (size < 0)
             throw new IndexOutOfBoundsException();
     }
 
+    /**
+     * Looks at the object at the top of this stack without removing it from the stack.
+     * @return object on the top
+     */
     public E top() {
         return stack[size - 1];
     }
 
+    /**
+     * Tests if this stack is empty.
+     * @return
+     */
     public boolean empty() {
         return size == 0;
     }

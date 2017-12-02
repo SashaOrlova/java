@@ -1,22 +1,18 @@
 package ru.java.homework;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Calculator {
-    private static int priority(char c) {
-        if (c == '+' || c == '-')
-            return 2;
-        if (c == '*' || c == '\\')
-            return 3;
-        if (c == '(')
-            return 0;
-        if (c == ')')
-            return 0;
-        return 4;
-    }
 
-    public static ArrayList<Integer> toReversePolishNotation(String expression) {
-        Stack<Character> operands = new Stack<>();
+    /** translate string to ArrayList contained expression in polish notation
+     * @param expression string contained expression for translation
+     * @param operands adjuvant Stack
+     * @return ArrayList with expression in polish notation
+     */
+    public static ArrayList<Integer> toReversePolishNotation(@NotNull String expression,
+                                                             @NotNull Stack<Character> operands) {
         ArrayList<Integer> st = new ArrayList<>();
         int i = 0;
         while (i < expression.length()) {
@@ -63,20 +59,14 @@ public class Calculator {
         return st;
     }
 
-    private static int eval(int arg1, int arg2, int op) {
-        if (op == '+')
-            return arg1 + arg2;
-        if (op == '-')
-            return arg2 - arg1;
-        if (op == '*')
-            return arg1 * arg2;
-        if (op == '/')
-            return arg2 / arg1;
-        return 0;
-    }
-
-    public static int EvaluateExpression(ArrayList<Integer> expr) {
-        Stack<Integer> operands = new Stack<>();
+    /**
+     * Evaluate expression in polish notation
+     * @param expr ArrayList contained expression in polish notation
+     * @param operands adjuvant Stack
+     * @return result of evaluation
+     */
+    public static int EvaluateExpression(@NotNull ArrayList<Integer> expr,
+                                         @NotNull Stack<Integer> operands) {
         for (int i = 0; i < expr.size(); i++) {
             int op = expr.get(i);
             if (op != '+' && op != '-' && op != '/' && op != '*')
@@ -91,4 +81,40 @@ public class Calculator {
         }
         return operands.top();
     }
+
+    /** take string and evaluate expression with use of polish notation
+     * @param characterStack adjuvant Stack
+     * @param integerStack adjuvant Stack
+     * @param expr expression for evaluate
+     * @return result of evaluation
+     */
+    public static int EvaluateAll(@NotNull Stack<Character> characterStack,
+                                  @NotNull Stack<Integer> integerStack, @NotNull String expr){
+        return EvaluateExpression(toReversePolishNotation(expr, characterStack), integerStack);
+    }
+
+    private static int priority(char c) {
+        if (c == '+' || c == '-')
+            return 2;
+        if (c == '*' || c == '\\')
+            return 3;
+        if (c == '(')
+            return 0;
+        if (c == ')')
+            return 0;
+        return 4;
+    }
+
+    private static int eval(int arg1, int arg2, int op) {
+        if (op == '+')
+            return arg1 + arg2;
+        if (op == '-')
+            return arg2 - arg1;
+        if (op == '*')
+            return arg1 * arg2;
+        if (op == '/')
+            return arg2 / arg1;
+        return 0;
+    }
+
 }
