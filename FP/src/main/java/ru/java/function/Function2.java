@@ -50,6 +50,6 @@ public interface Function2<T1, T2, R> {
      * @return function of one argument
      */
     default Function1<T1, Function1<T2, R>> curry() {
-        return t -> bind1(t);
+        return this::bind1;
     }
 }

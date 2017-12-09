@@ -25,7 +25,7 @@ public interface Predicate<T> extends Function1<T, Boolean> {
      * @param pred - other predicate
      * @return new Predicate
      */
-    default Predicate<? extends T> and(@NotNull Predicate<? super T> pred) {
+    default Predicate<T> and(@NotNull Predicate<? super T> pred) {
         return t -> apply(t) && pred.apply(t);
     }
 

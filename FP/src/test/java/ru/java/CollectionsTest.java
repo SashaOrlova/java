@@ -6,6 +6,7 @@ import ru.java.function.Function2;
 import ru.java.function.Predicate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -45,12 +46,12 @@ public class CollectionsTest {
         Function1<Integer, Integer> plus4 = (new Sum()).bind1(4);
         Function1<Integer, Integer> plus7 = (new Sum()).bind2(7);
 
-        ArrayList<Integer> test = new ArrayList<>();
-        ArrayList<Integer> resSum = new ArrayList<>();
-        ArrayList<Integer> resMul = new ArrayList<>();
-        ArrayList<Integer> resComp = new ArrayList<>();
-        ArrayList<Integer> resPlus4 = new ArrayList<>();
-        ArrayList<Integer> resPlus7 = new ArrayList<>();
+        List<Integer> test = new ArrayList<>();
+        List<Integer> resSum = new ArrayList<>();
+        List<Integer> resMul = new ArrayList<>();
+        List<Integer> resComp = new ArrayList<>();
+        List<Integer> resPlus4 = new ArrayList<>();
+        List<Integer> resPlus7 = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             test.add(i);
             resSum.add(i + 10);
@@ -59,11 +60,11 @@ public class CollectionsTest {
             resPlus4.add(i + 4);
             resPlus7.add(i + 7);
         }
-        ArrayList ans1 = Collections.map(test, new Plus10());
-        ArrayList ans2 = Collections.map(test, new Mult2());
-        ArrayList ans3 = Collections.map(test, comp);
-        ArrayList ans4 = Collections.map(test, plus4);
-        ArrayList ans7 = Collections.map(test, plus7);
+        List ans1 = Collections.map(test, new Plus10());
+        List ans2 = Collections.map(test, new Mult2());
+        List ans3 = Collections.map(test, comp);
+        List ans4 = Collections.map(test, plus4);
+        List ans7 = Collections.map(test, plus7);
         for (int i = 0; i < 15; i++) {
             assertEquals(resSum.get(i), ans1.get(i));
             assertEquals(resMul.get(i), ans2.get(i));
@@ -82,7 +83,7 @@ public class CollectionsTest {
             if (i % 2 == 0)
                 res.add(i);
         }
-        ArrayList ans = Collections.filter(test, new IsEven());
+        List ans = Collections.filter(test, new IsEven());
         for (int i = 0; i < 8; i++) {
             assertEquals(res.get(i), ans.get(i));
         }
@@ -102,8 +103,8 @@ public class CollectionsTest {
             test.add(i * 2 - 1);
             res2.add(i * 2 - 1);
         }
-        ArrayList ans = Collections.takeWhile(test, new IsEven());
-        ArrayList ans2 = Collections.takeWhile(test, Predicate.ALWAYS_TRUE());
+        List ans = Collections.takeWhile(test, new IsEven());
+        List ans2 = Collections.takeWhile(test, Predicate.ALWAYS_TRUE());
         assertEquals(res.size(), ans.size());
         assertEquals(res2.size(), ans2.size());
         for (int i = 0; i < 5; i++) {
@@ -125,8 +126,8 @@ public class CollectionsTest {
         for (int i = 0; i < 5; i++) {
             test.add(i * 2);
         }
-        ArrayList ans = Collections.takeUnless(test, new IsEven());
-        ArrayList ans2 = Collections.takeUnless(test, (new IsEven()).not());
+        List ans = Collections.takeUnless(test, new IsEven());
+        List ans2 = Collections.takeUnless(test, (new IsEven()).not());
         assertEquals(0, ans2.size());
         assertEquals(res.size(), ans.size());
         for (int i = 0; i < 5; i++) {

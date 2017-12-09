@@ -7,6 +7,7 @@ import ru.java.function.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Class for work with collections and functions
@@ -21,7 +22,7 @@ public class Collections {
      * @param <R> - type of new collection
      * @return new ArrayList contains of result of f applying
      */
-    public static <E, R> ArrayList<R> map(@NotNull Collection<E> a, @NotNull Function1<? super E, R> f) {
+    public static <E, R> List<R> map(@NotNull Collection<E> a, @NotNull Function1<? super E, R> f) {
         ArrayList<R> ans = new ArrayList<>();
         for (E elem : a) {
             ans.add(f.apply(elem));
@@ -37,7 +38,7 @@ public class Collections {
      * @param <E> - type of elements in collection
      * @return new ArrayList contains elements matched p
      */
-    public static <E> ArrayList<E> filter(@NotNull Collection<E> a, @NotNull Predicate<E> p) {
+    public static <E> List<E> filter(@NotNull Collection<E> a, @NotNull Predicate<E> p) {
         ArrayList<E> ans = new ArrayList<>();
         for (E elem : a) {
             if (p.apply(elem))
@@ -54,7 +55,7 @@ public class Collections {
      * @param <E> - type of elements in collection
      * @return new ArrayList contains elements from beginning matched p
      */
-    public static <E> ArrayList<E> takeWhile(@NotNull Collection<E> a, @NotNull Predicate<? super E> p) {
+    public static <E> List<E> takeWhile(@NotNull Collection<E> a, @NotNull Predicate<? super E> p) {
         ArrayList<E> ans = new ArrayList<>();
         for (E elem : a) {
             if (p.apply(elem))
@@ -73,8 +74,8 @@ public class Collections {
      * @param <E> - type of elements in collection
      * @return new ArrayList contains elements from beginning don't matched p
      */
-    public static <E> ArrayList<E> takeUnless(@NotNull Collection<E> a, @NotNull Predicate<? super E> p) {
-        return takeWhile(a, t -> !p.apply(t));
+    public static <E> List<E> takeUnless(@NotNull Collection<E> a, @NotNull Predicate<? super E> p) {
+        return takeWhile(a, t -> p.not().apply(t));
     }
 
     /**
