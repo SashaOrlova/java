@@ -6,13 +6,15 @@ import java.util.ArrayList;
 
 public class Calculator {
 
-    /** translate string to ArrayList contained expression in polish notation
+    /**
+     * translate string to ArrayList contained expression in polish notation
+     *
      * @param expression string contained expression for translation
-     * @param operands adjuvant Stack
+     * @param operands   adjuvant Stack
      * @return ArrayList with expression in polish notation
      */
     public static ArrayList<Integer> toReversePolishNotation(@NotNull String expression,
-                                                             @NotNull Stack<Character> operands) {
+                                                             @NotNull Stack<Character> operands) throws Exception {
         ArrayList<Integer> st = new ArrayList<>();
         int i = 0;
         while (i < expression.length()) {
@@ -61,12 +63,13 @@ public class Calculator {
 
     /**
      * Evaluate expression in polish notation
-     * @param expr ArrayList contained expression in polish notation
+     *
+     * @param expr     ArrayList contained expression in polish notation
      * @param operands adjuvant Stack
      * @return result of evaluation
      */
     public static int EvaluateExpression(@NotNull ArrayList<Integer> expr,
-                                         @NotNull Stack<Integer> operands) {
+                                         @NotNull Stack<Integer> operands) throws Exception {
         for (int i = 0; i < expr.size(); i++) {
             int op = expr.get(i);
             if (op != '+' && op != '-' && op != '/' && op != '*')
@@ -82,14 +85,16 @@ public class Calculator {
         return operands.top();
     }
 
-    /** take string and evaluate expression with use of polish notation
+    /**
+     * take string and evaluate expression with use of polish notation
+     *
      * @param characterStack adjuvant Stack
-     * @param integerStack adjuvant Stack
-     * @param expr expression for evaluate
+     * @param integerStack   adjuvant Stack
+     * @param expr           expression for evaluate
      * @return result of evaluation
      */
     public static int EvaluateAll(@NotNull Stack<Character> characterStack,
-                                  @NotNull Stack<Integer> integerStack, @NotNull String expr){
+                                  @NotNull Stack<Integer> integerStack, @NotNull String expr) throws Exception {
         return EvaluateExpression(toReversePolishNotation(expr, characterStack), integerStack);
     }
 

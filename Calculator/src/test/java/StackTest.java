@@ -1,6 +1,6 @@
 import ru.java.homework.Stack;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class StackTest {
     @org.junit.Test
@@ -16,10 +16,10 @@ public class StackTest {
         for (char i = 0; i < 105; i++) {
             testStack.push(i);
         }
-        assertEquals((Character) (char) 104 ,testStack.top());
+        assertEquals((Character) (char) 104, testStack.top());
     }
 
-    @org.junit.Test
+    @org.junit.Test(expected = Stack.EmptyStackException.class)
     public void pop() throws Exception {
         Stack<Character> testStack = new Stack<>();
         testStack.push('a');
@@ -32,6 +32,8 @@ public class StackTest {
         assertEquals((Character) 'b', testStack.top());
         testStack.pop();
         assertEquals((Character) 'a', testStack.top());
+        testStack.pop();
+        testStack.pop();
     }
 
     @org.junit.Test

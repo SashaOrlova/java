@@ -8,9 +8,8 @@ public class Stack<E> {
 
     @SuppressWarnings("unchecked")
     private void rebuild() {
-        E[] newStack = (E[]) new Object[reserve*2];
-        for (int i = 0 ; i < reserve; i++)
-            newStack[i] = stack[i];
+        E[] newStack = (E[]) new Object[reserve * 2];
+        System.arraycopy(stack, 0, newStack, 0, reserve);
         stack = newStack;
         reserve *= 2;
     }
@@ -18,7 +17,7 @@ public class Stack<E> {
     /**
      * Pushes an item onto the top of this stack.
      */
-    public void push (E c) {
+    public void push(E c) {
         if (size >= reserve)
             rebuild();
         stack[size++] = c;
@@ -26,16 +25,18 @@ public class Stack<E> {
 
     /**
      * Removes the object at the top of this stack
-     * @throws RuntimeException if stack was empty
+     *
+     * @throws EmptyStackException if stack was empty
      */
-    public void pop() throws RuntimeException {
+    public void pop() throws EmptyStackException {
         size--;
         if (size < 0)
-            throw new IndexOutOfBoundsException();
+            throw new EmptyStackException();
     }
 
     /**
      * Looks at the object at the top of this stack without removing it from the stack.
+     *
      * @return object on the top
      */
     public E top() {
@@ -44,9 +45,12 @@ public class Stack<E> {
 
     /**
      * Tests if this stack is empty.
+     *
      * @return
      */
     public boolean empty() {
         return size == 0;
     }
+
+    public static class EmptyStackException extends Exception {}
 }
