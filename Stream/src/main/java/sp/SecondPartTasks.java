@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,20 +29,16 @@ public final class SecondPartTasks {
     // Стрелок атакует мишень и каждый раз попадает в произвольную точку квадрата.
     // Надо промоделировать этот процесс с помощью класса java.util.Random и посчитать, какова вероятность попасть в мишень.
     public static double piDividedBy4() {
-        class Coord {
-            public double x;
-            public double y;
-            Coord(double x, double y) {
-                this.x = x;
-                this.y = y;
-            }
-        }
         Random rand = new Random();
-        return Stream.generate(() -> new Coord(rand.nextDouble(), rand.nextDouble())).limit(10000)
-                .filter(p -> Math.sqrt(Math.abs((p.x - 0.5)*(p.x - 0.5)) + Math.abs((p.y - 0.5)*(p.y - 0.5))) < 0.5)
+        return Stream.generate(() -> {
+            double x = rand.nextDouble();
+            double y = rand.nextDouble();
+            return Math.sqrt(Math.abs((x - 0.5)*(x - 0.5)) + Math.abs((y - 0.5)*(y - 0.5)));
+        }).limit(10000)
+                .filter(p -> p < 0.5)
                     .count()/10000.0;
     }
-//x.getValue().stream().map(String::length).reduce((a, b) -> a+b)
+
     // Дано отображение из имени автора в список с содержанием его произведений.
     // Надо вычислить, чья общая длина произведений наибольшая.
     public static String findPrinter(Map<String, List<String>> compositions) {
