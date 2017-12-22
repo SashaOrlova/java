@@ -20,7 +20,7 @@ public class SecondPartTasksTest {
     public void testPiDividedBy4() {
         assertTrue(
                 Math.abs(Math.PI/4 -
-                SecondPartTasks.piDividedBy4() ) < 0.001
+                SecondPartTasks.piDividedBy4() ) < 0.01
         );
     }
 
