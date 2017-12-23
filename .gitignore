@@ -25,6 +25,4 @@ hs_err_pid*
 *tasks.xml
 
 */target/*
-
-master
 *.DS_Store
