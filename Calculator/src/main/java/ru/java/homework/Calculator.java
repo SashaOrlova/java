@@ -14,7 +14,7 @@ public class Calculator {
      * @return ArrayList with expression in polish notation
      */
     public static ArrayList<Integer> toReversePolishNotation(@NotNull String expression,
-                                                             @NotNull Stack<Character> operands) throws Exception {
+                                                             @NotNull Stack<Character> operands) {
         ArrayList<Integer> st = new ArrayList<>();
         int i = 0;
         while (i < expression.length()) {
@@ -69,7 +69,7 @@ public class Calculator {
      * @return result of evaluation
      */
     public static int EvaluateExpression(@NotNull ArrayList<Integer> expr,
-                                         @NotNull Stack<Integer> operands) throws Exception {
+                                         @NotNull Stack<Integer> operands) {
         for (int i = 0; i < expr.size(); i++) {
             int op = expr.get(i);
             if (op != '+' && op != '-' && op != '/' && op != '*')
@@ -94,7 +94,7 @@ public class Calculator {
      * @return result of evaluation
      */
     public static int EvaluateAll(@NotNull Stack<Character> characterStack,
-                                  @NotNull Stack<Integer> integerStack, @NotNull String expr) throws Exception {
+                                  @NotNull Stack<Integer> integerStack, @NotNull String expr) {
         return EvaluateExpression(toReversePolishNotation(expr, characterStack), integerStack);
     }
 

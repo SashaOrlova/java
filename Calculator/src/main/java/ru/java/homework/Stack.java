@@ -40,17 +40,19 @@ public class Stack<E> {
      * @return object on the top
      */
     public E top() {
+        if (size == 0)
+            throw new EmptyStackException();
         return stack[size - 1];
     }
 
     /**
      * Tests if this stack is empty.
      *
-     * @return
+     * @return true if stack empty, false otherwise
      */
     public boolean empty() {
         return size == 0;
     }
 
-    public static class EmptyStackException extends Exception {}
+    public static class EmptyStackException extends RuntimeException {}
 }
