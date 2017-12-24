@@ -1,8 +1,11 @@
-public class TestMethods<E> {
-    E get(int i) {
+public class TestMethods<T> {
+    public T getValue() {
         return null;
     }
-    <K> K put(K i) {
+
+    public static <K> K put(int arg0) {
         return null;
     }
+
+
 }

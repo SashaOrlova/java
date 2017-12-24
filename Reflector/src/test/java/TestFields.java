@@ -6,6 +6,10 @@ public class TestFields {
     double z = 0;
     Object y = 0;
     Comparator<? extends Set> cmp = null;
-    TestFields(int t) {}
-    private TestFields(String st, Set<Integer> s) {}
+
+    TestFields(int t) {
+    }
+
+    private TestFields(String st, Set<Integer> s) {
+    }
 }

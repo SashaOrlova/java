@@ -1,2 +1,2 @@
-public class TestFirst<E extends Comparable<? extends Object>, K> {
+public class TestFirst<E extends Comparable<?>, K> {
 }

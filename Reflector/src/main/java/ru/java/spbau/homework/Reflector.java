@@ -1,3 +1,5 @@
+package ru.java.spbau.homework;
+
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
@@ -6,8 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.*;
 
+/**
+ * Class for writing class in file
+ */
 public class Reflector {
 
+    /** Print class structure in file named classname.java
+     * @param someClass class that be printed
+     */
     public static void printStructure(Class<?> someClass) {
         String fileName = someClass.getSimpleName();
         File f = new File(fileName + ".java");
@@ -31,7 +39,7 @@ public class Reflector {
             ans.append("interface ");
         } else
             ans.append("class ");
-        ans.append(someClass.getTypeName());
+        ans.append(someClass.getSimpleName());
         TypeVariable<? extends Class<?>>[] types = someClass.getTypeParameters();
         if (types.length != 0) {
             ans.append('<');
@@ -108,7 +116,7 @@ public class Reflector {
     private static void writeMethod(StringBuilder ans, Method method) throws IOException {
         int mod = method.getModifiers();
         ans.append(Modifier.toString(mod)).append(' ');
-        Type[] types = method.getGenericParameterTypes();
+        Type[] types = method.getTypeParameters();
         if (types.length > 0) {
             ans.append('<');
             for (int i = 0; i < types.length - 1; i++)
@@ -147,6 +155,5 @@ public class Reflector {
         for (Class<?> clazz : classes)
             writeClass(ans, clazz);
         ans.append("\n}\n");
-
     }
 }

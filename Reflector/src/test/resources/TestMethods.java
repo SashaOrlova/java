@@ -1,11 +1,11 @@
-public class TestMethods<E extends java.lang.Object> extends java.lang.Object {
-    public TestMethods() {}
+public class TestMethods<T extends java.lang.Object> extends java.lang.Object {
+  public TestMethods() {}
 
-    E get(int arg0) {
-        return null;
-    }
+  public static <K> K put(int arg0) {
+    return null;
+  }
 
-    <K> K put(K arg0) {
-        return null;
-    }
+  public T getValue() {
+    return null;
+  }
 }
