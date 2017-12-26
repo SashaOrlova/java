@@ -108,4 +108,9 @@ public class CalculatorTest {
         assertEquals(25, Calculator.EvaluateExpression(
                 Calculator.toReversePolishNotation(expr, new Stack<>()), new Stack<>()));
     }
+
+    @Test(expected = Calculator.CalculatorWrongExpressionException.class)
+    public void wrongExpression() throws Exception {
+        Calculator.EvaluateAll(new Stack<>(), new Stack<>(), "+1");
+    }
 }

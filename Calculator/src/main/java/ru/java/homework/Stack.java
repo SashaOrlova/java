@@ -39,7 +39,7 @@ public class Stack<E> {
      *
      * @return object on the top
      */
-    public E top() {
+    public E top() throws EmptyStackException {
         if (size == 0)
             throw new EmptyStackException();
         return stack[size - 1];
@@ -54,5 +54,5 @@ public class Stack<E> {
         return size == 0;
     }
 
-    public static class EmptyStackException extends RuntimeException {}
+    public static class EmptyStackException extends Exception {}
 }
